@@ -1,203 +1,242 @@
 body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #0a1828, #1a3a52, #2c5364);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    font-family: 'Georgia', serif;
-    position: relative;
-}
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at center, #1a3a52, #07111a);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+        }
 
-/* Christmas Greeting */
-.greeting {
-    position: absolute;
-    top: 40px;
-    color: #fff;
-    font-size: 48px;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 0 0 20px rgba(255,215,0,1), 0 0 40px rgba(255,100,100,0.8);
-    animation: glow 2s ease-in-out infinite alternate;
-    z-index: 100;
-}
+        .greeting {
+            position: absolute;
+            top: 40px;
+            color: #fff;
+            font-size: clamp(24px, 5vw, 48px);
+            font-weight: bold;
+            text-shadow: 0 0 20px gold;
+            animation: glow 2s ease-in-out infinite alternate;
+            z-index: 100;
+        }
 
-@keyframes glow {
-    0% { 
-        text-shadow: 0 0 20px rgba(255,215,0,1), 0 0 40px rgba(255,100,100,0.8);
-        transform: scale(1);
-    }
-    100% { 
-        text-shadow: 0 0 30px rgba(255,215,0,1), 0 0 60px rgba(255,100,100,1);
-        transform: scale(1.05);
-    }
-}
+        /* Tree Container */
+        .tree-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
 
-/* Tree Container */
-.tree-container {
-    position: relative;
-    width: 400px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-}
+        /* The Star at the very top */
+        .star {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            filter: drop-shadow(0 0 20px gold);
+            animation: pulseStar 1.5s infinite alternate;
+            z-index: 50;
+            margin-bottom: 5px;
+        }
 
-/* Star on Top */
-.star {
-    position: absolute;
-    top: 10px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(45deg, #ffd700, #ffed4e);
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-    animation: pulseStar 1.5s infinite alternate;
-    z-index: 10;
-    filter: drop-shadow(0 0 20px gold);
-}
+        /* Layered Tree Shape */
+        .tree-layer {
+            width: 0;
+            height: 0;
+            border-left: var(--w) solid transparent;
+            border-right: var(--w) solid transparent;
+            border-bottom: var(--h) solid #2d5a27;
+            margin-top: -40px;
+            position: relative;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            border-radius: 0 0 50% 50% / 0 0 20% 20%;
+            cursor: pointer;
+        }
 
-@keyframes pulseStar {
-    0% { 
-        transform: scale(1) rotate(0deg); 
-        filter: drop-shadow(0 0 20px gold) brightness(1);
-    }
-    100% { 
-        transform: scale(1.2) rotate(180deg); 
-        filter: drop-shadow(0 0 30px gold) brightness(1.5);
-    }
-}
+        /* Variation in layer sizes */
+        .layer-1 { --w: 60px;  --h: 80px;  z-index: 4; border-bottom-color: #386633; }
+        .layer-2 { --w: 100px; --h: 110px; z-index: 3; border-bottom-color: #2d5a27; }
+        .layer-3 { --w: 140px; --h: 140px; z-index: 2; border-bottom-color: #244d1f; }
+        .layer-4 { --w: 180px; --h: 170px; z-index: 1; border-bottom-color: #1b3d17; }
 
-/* Tree Shape - Single Triangle */
-.tree-shape {
-    position: relative;
-    width: 0;
-    height: 0;
-    border-left: 200px solid transparent;
-    border-right: 200px solid transparent;
-    border-bottom: 400px solid #2d5016;
-    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.5));
-    cursor: pointer;
-}
+        .trunk {
+            width: 50px;
+            height: 60px;
+            background: linear-gradient(to right, #4e342e, #3e2723);
+            border-radius: 0 0 5px 5px;
+            z-index: 0;
+        }
 
-/* Trunk */
-.trunk {
-    width: 70px;
-    height: 90px;
-    background: linear-gradient(to right, #5d4037, #6d4c41, #5d4037);
-    border-radius: 5px;
-    margin-top: -10px;
-    z-index: 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-}
+        /* Gift Boxes */
+        .gifts-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            z-index: 0;
+        }
 
-/* Christmas Bulbs/Lights */
-.bulb {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    z-index: 5;
-    animation: twinkle 2s infinite;
-    pointer-events: none;
-}
+        .gift {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border-radius: 3px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: giftFloat 3s ease-in-out infinite;
+        }
 
-.bulb::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 5px;
-    background: #333;
-}
+        .gift-1 {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation-delay: 0s;
+        }
 
-@keyframes twinkle {
-    0%, 100% { 
-        opacity: 1; 
-        transform: scale(1);
-        filter: brightness(1);
-    }
-    50% { 
-        opacity: 0.3; 
-        transform: scale(0.8);
-        filter: brightness(1.5);
-    }
-}
+        .gift-2 {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            animation-delay: 0.5s;
+            width: 45px;
+            height: 45px;
+        }
 
-/* Ornaments */
-.ornament {
-    position: absolute;
-    width: 18px;
-    height: 22px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    z-index: 6;
-    box-shadow: inset -3px -3px 6px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.3);
-    animation: swing 3s ease-in-out infinite, colorChange 3s infinite;
-    pointer-events: none;
-}
+        .gift-3 {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            animation-delay: 1s;
+            width: 55px;
+            height: 48px;
+        }
 
-.ornament::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: #888;
-    border-radius: 2px;
-}
+        /* Ribbon on gifts */
+        .gift::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+        }
 
-.ornament::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 6px;
-    height: 6px;
-    background: rgba(255,255,255,0.6);
-    border-radius: 50%;
-}
+        .gift::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+        }
 
-@keyframes colorChange {
-    0% { filter: hue-rotate(0deg) brightness(1); }
-    33% { filter: hue-rotate(120deg) brightness(1.2); }
-    66% { filter: hue-rotate(240deg) brightness(1.1); }
-    100% { filter: hue-rotate(360deg) brightness(1); }
-}
+        /* Bow on top of gift */
+        .bow {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+        }
 
-@keyframes swing {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
-}
+        .bow::before,
+        .bow::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            top: 4px;
+        }
 
-/* Snowflakes */
-.snowflake {
-    position: absolute;
-    top: -10px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    pointer-events: none;
-    animation: fall linear infinite;
-}
+        .bow::before {
+            left: -10px;
+        }
 
-@keyframes fall {
-    to { transform: translateY(100vh); }
-}
+        .bow::after {
+            right: -10px;
+        }
 
-/* Instructions */
-.instructions {
-    position: absolute;
-    bottom: 30px;
-    color: white;
-    background: rgba(0,0,0,0.6);
-    padding: 12px 25px;
-    border-radius: 25px;
-    font-size: 16px;
-    z-index: 100;
-}
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Color-changing Ornament/Bulb Styling */
+        .ornament {
+            position: absolute;
+            width: 18px;
+            height: 22px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            z-index: 10;
+            box-shadow: inset -3px -3px 6px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.3);
+            animation: swing 3s ease-in-out infinite, colorChange 4s infinite;
+            pointer-events: none;
+        }
+
+        /* Metal cap on top of ornament */
+        .ornament::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #888;
+            border-radius: 2px;
+        }
+
+        /* Shine/highlight on ornament */
+        .ornament::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+        }
+
+        /* Snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes glow { 
+            0% { opacity: 0.8; transform: scale(1); } 
+            100% { opacity: 1; transform: scale(1.05); } 
+        }
+        
+        @keyframes pulseStar { 
+            0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 20px gold) brightness(1); } 
+            100% { transform: scale(1.2) rotate(180deg); filter: drop-shadow(0 0 30px gold) brightness(1.5); } 
+        }
+        
+        @keyframes fall { 
+            to { transform: translateY(100vh); } 
+        }
+        
+        @keyframes swing { 
+            0%, 100% { transform: rotate(-10deg); } 
+            50% { transform: rotate(10deg); } 
+        }
+
+        @keyframes colorChange {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            25% { filter: hue-rotate(90deg) brightness(1.2); }
+            50% { filter: hue-rotate(180deg) brightness(1.1); }
+            75% { filter: hue-rotate(270deg) brightness(1.2); }
+            100% { filter: hue-rotate(360deg) brightness(1); }
+        }

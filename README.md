@@ -5,14 +5,10 @@
 A simple and fun Christmas greeting web page built using HTML, CSS, and JavaScript.
 
 ✨ Features
-
-Animated Christmas tree made with pure CSS
-
-Falling snow animation ❄️
-
-Clickable tree layers to add colorful ornaments 🎨
-
-Festive star and gift box animations 🎁
+       Animated Christmas tree made with pure CSS
+       Falling snow animation ❄️
+       Clickable tree layers to add colorful ornaments 🎨
+       Festive star and gift box animations 🎁
 
 This project was created as a small creative experiment to practice animations, DOM manipulation, and interactive UI design using vanilla web technologies.
 

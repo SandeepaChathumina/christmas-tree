@@ -1,0 +1,203 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #0a1828, #1a3a52, #2c5364);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
+    position: relative;
+}
+
+/* Christmas Greeting */
+.greeting {
+    position: absolute;
+    top: 40px;
+    color: #fff;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255,215,0,1), 0 0 40px rgba(255,100,100,0.8);
+    animation: glow 2s ease-in-out infinite alternate;
+    z-index: 100;
+}
+
+@keyframes glow {
+    0% { 
+        text-shadow: 0 0 20px rgba(255,215,0,1), 0 0 40px rgba(255,100,100,0.8);
+        transform: scale(1);
+    }
+    100% { 
+        text-shadow: 0 0 30px rgba(255,215,0,1), 0 0 60px rgba(255,100,100,1);
+        transform: scale(1.05);
+    }
+}
+
+/* Tree Container */
+.tree-container {
+    position: relative;
+    width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* Star on Top */
+.star {
+    position: absolute;
+    top: 10px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #ffd700, #ffed4e);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    animation: pulseStar 1.5s infinite alternate;
+    z-index: 10;
+    filter: drop-shadow(0 0 20px gold);
+}
+
+@keyframes pulseStar {
+    0% { 
+        transform: scale(1) rotate(0deg); 
+        filter: drop-shadow(0 0 20px gold) brightness(1);
+    }
+    100% { 
+        transform: scale(1.2) rotate(180deg); 
+        filter: drop-shadow(0 0 30px gold) brightness(1.5);
+    }
+}
+
+/* Tree Shape - Single Triangle */
+.tree-shape {
+    position: relative;
+    width: 0;
+    height: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-bottom: 400px solid #2d5016;
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.5));
+    cursor: pointer;
+}
+
+/* Trunk */
+.trunk {
+    width: 70px;
+    height: 90px;
+    background: linear-gradient(to right, #5d4037, #6d4c41, #5d4037);
+    border-radius: 5px;
+    margin-top: -10px;
+    z-index: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+/* Christmas Bulbs/Lights */
+.bulb {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    z-index: 5;
+    animation: twinkle 2s infinite;
+    pointer-events: none;
+}
+
+.bulb::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 5px;
+    background: #333;
+}
+
+@keyframes twinkle {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% { 
+        opacity: 0.3; 
+        transform: scale(0.8);
+        filter: brightness(1.5);
+    }
+}
+
+/* Ornaments */
+.ornament {
+    position: absolute;
+    width: 18px;
+    height: 22px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 6;
+    box-shadow: inset -3px -3px 6px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.3);
+    animation: swing 3s ease-in-out infinite, colorChange 3s infinite;
+    pointer-events: none;
+}
+
+.ornament::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #888;
+    border-radius: 2px;
+}
+
+.ornament::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+}
+
+@keyframes colorChange {
+    0% { filter: hue-rotate(0deg) brightness(1); }
+    33% { filter: hue-rotate(120deg) brightness(1.2); }
+    66% { filter: hue-rotate(240deg) brightness(1.1); }
+    100% { filter: hue-rotate(360deg) brightness(1); }
+}
+
+@keyframes swing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+/* Snowflakes */
+.snowflake {
+    position: absolute;
+    top: -10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
+}
+
+/* Instructions */
+.instructions {
+    position: absolute;
+    bottom: 30px;
+    color: white;
+    background: rgba(0,0,0,0.6);
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    z-index: 100;
+}

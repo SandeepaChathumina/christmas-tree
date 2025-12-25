@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Animated Christmas Tree</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at center, #1a3a52, #07111a);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+        }
+
+        .greeting {
+            position: absolute;
+            top: 40px;
+            color: #fff;
+            font-size: clamp(24px, 5vw, 48px);
+            font-weight: bold;
+            text-shadow: 0 0 20px gold;
+            animation: glow 2s ease-in-out infinite alternate;
+            z-index: 100;
+        }
+
+        /* Tree Container */
+        .tree-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        /* The Star at the very top */
+        .star {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            filter: drop-shadow(0 0 20px gold);
+            animation: pulseStar 1.5s infinite alternate;
+            z-index: 50;
+            margin-bottom: 5px;
+        }
+
+        /* Layered Tree Shape */
+        .tree-layer {
+            width: 0;
+            height: 0;
+            border-left: var(--w) solid transparent;
+            border-right: var(--w) solid transparent;
+            border-bottom: var(--h) solid #2d5a27;
+            margin-top: -40px;
+            position: relative;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            border-radius: 0 0 50% 50% / 0 0 20% 20%;
+            cursor: pointer;
+        }
+
+        /* Variation in layer sizes */
+        .layer-1 { --w: 60px;  --h: 80px;  z-index: 4; border-bottom-color: #386633; }
+        .layer-2 { --w: 100px; --h: 110px; z-index: 3; border-bottom-color: #2d5a27; }
+        .layer-3 { --w: 140px; --h: 140px; z-index: 2; border-bottom-color: #244d1f; }
+        .layer-4 { --w: 180px; --h: 170px; z-index: 1; border-bottom-color: #1b3d17; }
+
+        .trunk {
+            width: 50px;
+            height: 60px;
+            background: linear-gradient(to right, #4e342e, #3e2723);
+            border-radius: 0 0 5px 5px;
+            z-index: 0;
+        }
+
+        /* Color-changing Ornament/Bulb Styling */
+        .ornament {
+            position: absolute;
+            width: 18px;
+            height: 22px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            z-index: 10;
+            box-shadow: inset -3px -3px 6px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.3);
+            animation: swing 3s ease-in-out infinite, colorChange 4s infinite;
+            pointer-events: none;
+        }
+
+        /* Metal cap on top of ornament */
+        .ornament::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #888;
+            border-radius: 2px;
+        }
+
+        /* Shine/highlight on ornament */
+        .ornament::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+        }
+
+        /* Snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes glow { 
+            0% { opacity: 0.8; transform: scale(1); } 
+            100% { opacity: 1; transform: scale(1.05); } 
+        }
+        
+        @keyframes pulseStar { 
+            0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 20px gold) brightness(1); } 
+            100% { transform: scale(1.2) rotate(180deg); filter: drop-shadow(0 0 30px gold) brightness(1.5); } 
+        }
+        
+        @keyframes fall { 
+            to { transform: translateY(100vh); } 
+        }
+        
+        @keyframes swing { 
+            0%, 100% { transform: rotate(-10deg); } 
+            50% { transform: rotate(10deg); } 
+        }
+
+        @keyframes colorChange {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            25% { filter: hue-rotate(90deg) brightness(1.2); }
+            50% { filter: hue-rotate(180deg) brightness(1.1); }
+            75% { filter: hue-rotate(270deg) brightness(1.2); }
+            100% { filter: hue-rotate(360deg) brightness(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="greeting">🎄 Wish you a Merry Christmas! 🎄</div>
+
+    <div class="tree-container" id="treeContainer">
+        <div class="star"></div>
+        <div class="tree-layer layer-1"></div>
+        <div class="tree-layer layer-2"></div>
+        <div class="tree-layer layer-3"></div>
+        <div class="tree-layer layer-4"></div>
+        <div class="trunk"></div>
+    </div>
+
+    <script>
+        // Create Snow
+        function createSnow() {
+            for(let i = 0; i < 50; i++) {
+                const snow = document.createElement('div');
+                snow.className = 'snowflake';
+                const size = Math.random() * 5 + 2 + 'px';
+                snow.style.width = size;
+                snow.style.height = size;
+                snow.style.left = Math.random() * 100 + 'vw';
+                snow.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snow.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(snow);
+            }
+        }
+
+        // Get all tree layers
+        const treeLayers = document.querySelectorAll('.tree-layer');
+        const treeContainer = document.getElementById('treeContainer');
+
+        // Add click event to each tree layer only
+        treeLayers.forEach(layer => {
+            layer.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent event from bubbling up
+                
+                // Check if click is actually on the visible triangle part
+                const rect = layer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Get layer width from CSS variable
+                const style = getComputedStyle(layer);
+                const width = parseInt(style.getPropertyValue('--w'));
+                const height = parseInt(style.getPropertyValue('--h'));
+                
+                // Check if point is within triangle bounds
+                // Triangle: top center at (width, 0), spreads to full width at bottom
+                const relativeY = y;
+                const maxWidth = (relativeY / height) * (width * 2);
+                const leftBound = width - maxWidth / 2;
+                const rightBound = width + maxWidth / 2;
+                
+                // Only create ornament if click is within triangle
+                if (x >= leftBound && x <= rightBound && y >= 0 && y <= height) {
+                    const ornament = document.createElement('div');
+                    ornament.className = 'ornament';
+                    const colors = ['#e74c3c', '#f1c40f', '#3498db', '#9b59b6', '#e67e22', '#1abc9c'];
+                    ornament.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Position ornament at click location
+                    ornament.style.left = (e.clientX - 9) + 'px';
+                    ornament.style.top = (e.clientY - 11) + 'px';
+                    
+                    document.body.appendChild(ornament);
+                }
+            });
+        });
+
+        createSnow();
+    </script>
+</body>
+</html>

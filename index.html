@@ -78,6 +78,101 @@
             z-index: 0;
         }
 
+        /* Gift Boxes */
+        .gifts-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            z-index: 0;
+        }
+
+        .gift {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border-radius: 3px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: giftFloat 3s ease-in-out infinite;
+        }
+
+        .gift-1 {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            animation-delay: 0s;
+        }
+
+        .gift-2 {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            animation-delay: 0.5s;
+            width: 45px;
+            height: 45px;
+        }
+
+        .gift-3 {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            animation-delay: 1s;
+            width: 55px;
+            height: 48px;
+        }
+
+        /* Ribbon on gifts */
+        .gift::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .gift::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Bow on top of gift */
+        .bow {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+        }
+
+        .bow::before,
+        .bow::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            top: 4px;
+        }
+
+        .bow::before {
+            left: -10px;
+        }
+
+        .bow::after {
+            right: -10px;
+        }
+
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
         /* Color-changing Ornament/Bulb Styling */
         .ornament {
             position: absolute;
@@ -165,6 +260,18 @@
         <div class="tree-layer layer-3"></div>
         <div class="tree-layer layer-4"></div>
         <div class="trunk"></div>
+    </div>
+
+    <div class="gifts-container">
+        <div class="gift gift-1">
+            <div class="bow"></div>
+        </div>
+        <div class="gift gift-2">
+            <div class="bow"></div>
+        </div>
+        <div class="gift gift-3">
+            <div class="bow"></div>
+        </div>
     </div>
 
     <script>
